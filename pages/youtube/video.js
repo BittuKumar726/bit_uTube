@@ -5,7 +5,7 @@ const Video = (props) => {
     return (
         <Card>
             <Row gutter={16}>
-                {data.length > 0 && data.map((item, idx) => {
+                {data && data.length > 0 && data.map((item, idx) => {
                     const videoId = getId(item?.link);
                     return (
                         <Col key={idx} span={24 / data.length}>
@@ -18,7 +18,7 @@ const Video = (props) => {
                                     src={`https://www.youtube.com/embed?v=${videoId}`}
                                     style={{ border: 0 }}
                                     allow='autoplay; encrypted-media'
-                                    allowfullscreen
+                                    allowFullScreen
                                     title='video'
                                 />}
                             >
@@ -36,9 +36,9 @@ const Video = (props) => {
 }
 const getId = (url) => {
     const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
-    const match = url.match(regExp);
+    const match = url.match(regExp) ? url.match(regExp) : [];
 
-    return (match && match[2].length === 11)
+    return (match && match.length > 0 && match[2].length === 11)
         ? match[2]
         : null;
 }
